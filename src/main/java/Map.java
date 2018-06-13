@@ -1,12 +1,13 @@
-import javax.xml.crypto.Data;
 import java.util.List;
 
 public class Map {
 
     private List<Point> points;
+    private int size;
 
-    public Map() {
+    public Map(int size) {
         DataLoader dl = new DataLoader("attract_small.txt");
         points = dl.getPoints();
+        System.out.println(points.toString());
     }
 }
