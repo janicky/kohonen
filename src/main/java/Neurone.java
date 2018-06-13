@@ -4,7 +4,11 @@ import java.util.List;
 public class Neurone {
 
     private List<Double> weights = new ArrayList<>();
-    private List<Point> points = new ArrayList<>();
+    private List<Point> points;
+
+    public Neurone(List<Point> points) {
+        this.points = points;
+    }
 
     private double function(int n) {
         double weight = weights.get(n);
