@@ -6,7 +6,6 @@ public class Neurone {
 
     private List<Weight> weights = new ArrayList<>();
     private List<Point> points;
-    private Random random = new Random();
 
     public Neurone(List<Point> points) {
         this.points = points;
