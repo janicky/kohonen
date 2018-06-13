@@ -12,7 +12,7 @@ public class DataLoader {
 
     public DataLoader(String fileName) {
         this.fileName = fileName;
-
+        readFile();
     }
 
     private boolean readFile() {
