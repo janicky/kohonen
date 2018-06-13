@@ -6,8 +6,10 @@ public class Map {
     private int size;
 
     public Map(int size) {
+//        set map size
+        this.size = size;
+//        load data from file
         DataLoader dl = new DataLoader("attract_small.txt");
         points = dl.getPoints();
-        System.out.println(points.toString());
     }
 }
