@@ -15,5 +15,24 @@ public class DataLoader {
 
     }
 
+    private boolean readFile() {
+        try {
+            file = new File(fileName);
+            scanner = new Scanner(file);
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String [] values = line.split("\\,");
+                points.add(new Point(
+                        Double.parseDouble(values[0]),
+                        Double.parseDouble(values[1])
+                ));
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
 
 }
