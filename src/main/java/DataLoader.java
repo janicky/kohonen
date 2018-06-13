@@ -34,5 +34,8 @@ public class DataLoader {
         return true;
     }
 
+    public List<Point> getPoints() {
+        return points;
+    }
 
 }
