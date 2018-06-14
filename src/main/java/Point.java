@@ -9,6 +9,10 @@ public class Point {
         this.y = y;
     }
 
+    public Neurone getNeurone() {
+        return neurone;
+    }
+
     public void setNeurone(Neurone neurone) {
         this.neurone = neurone;
     }
