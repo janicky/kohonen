@@ -18,18 +18,45 @@ public class Map {
 //        create neurons
         createNeurons();
 //        init lambda
-        lambda = max() / neurons.size();
+        lambda = max();
 
-        System.out.println(lambda);
+        for (Neurone n : neurons) {
+            System.out.println(n.getOutput());
+        }
+        for (int i = 0; i < 20; i++) {
+            epoch();
+            System.out.println(getGlobalError());
+        }
 
-        epoch();
+        System.out.println();
+        for (Neurone n : neurons) {
+            System.out.println(n.getOutput());
+        }
+
+        for (Point p : points) {
+            Neurone best_neurone = null;
+            double min = Double.MAX_VALUE;
+            for (Neurone n : neurons) {
+                if (min > p.distanceTo(n)) {
+                    min = p.distanceTo(n);
+                    best_neurone = n;
+                }
+            }
+            p.setNeurone(best_neurone);
+        }
+
+        Diagram d = new Diagram(400);
+        d.setNeurons(neurons);
+        d.setPoints(points);
+        d.draw();
     }
 
     public void epoch() {
         for (Neurone n : neurons) {
-            System.out.println(n.getOutput());
-
+            n.getOutput();
+            n.learn(lambda);
         }
+        lambda *= 0.9;
         ++epoch;
     }
 
@@ -51,5 +78,16 @@ public class Map {
         for (int i = 0 ; i < size; i++) {
             neurons.add(new Neurone(points));
         }
+    }
+
+    private double getGlobalError() {
+        double sum = 0d;
+        if (neurons.size() == 0) {
+            return 0;
+        }
+        for (Neurone n : neurons) {
+            sum += n.getError();
+        }
+        return sum / neurons.size();
     }
 }

@@ -53,6 +53,7 @@ public class Neurone {
             if (winner.distanceTo(w) < lambda) {
                 w.correctX(function(weights.indexOf(winner)) * winner.diffX(w));
                 w.correctY(function(weights.indexOf(winner)) * winner.diffY(w));
+                points.get(weights.indexOf(w)).setNeurone(this);
             }
         }
     }
