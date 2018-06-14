@@ -19,6 +19,14 @@ public class Weight {
         return y;
     }
 
+    public void correctX(double x) {
+        this.x += x;
+    }
+
+    public void correctY(double y) {
+        this.y += y;
+    }
+
     public double distanceTo(Weight w) {
         return Math.sqrt(
                 Math.pow(x - w.getX(), 2) +
