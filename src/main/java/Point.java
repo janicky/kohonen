@@ -24,4 +24,11 @@ public class Point {
     public double getY() {
         return y;
     }
+
+    public double distanceTo(Neurone n) {
+        return Math.sqrt(
+                Math.pow(x - n.getX(), 2) +
+                        Math.pow(y - n.getY(), 2)
+        );
+    }
 }
