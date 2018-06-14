@@ -5,6 +5,8 @@ public class Neurone {
 
     private List<Weight> weights = new ArrayList<>();
     private List<Point> points;
+    private double learningFactor = 0.5;
+    private Weight winner = null;
 
     public Neurone(List<Point> points) {
         this.points = points;
@@ -34,7 +36,14 @@ public class Neurone {
                 w_max = weights.get(points.indexOf(p));
             }
         }
+        winner = w_max;
         return w_max;
+    }
+
+    public void learn(double lambda) {
+//        for (Weight w : weights) {
+//
+//        }
     }
 
 }
