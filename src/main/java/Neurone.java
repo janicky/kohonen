@@ -44,6 +44,7 @@ public class Neurone {
         for (Weight w : weights) {
             if (winner.distanceTo(w) < lambda) {
                 w.correctX(learningFactor * winner.distanceX(w));
+                w.correctY(learningFactor * winner.distanceY(w));
             }
         }
     }
