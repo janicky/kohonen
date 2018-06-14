@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Neurone {
 
@@ -26,16 +25,16 @@ public class Neurone {
         return 1 / Math.sqrt(Math.pow(weight.getX() - point.getX(), 2) + Math.pow(weight.getY() - point.getY(), 2));
     }
 
-    public Point getOutput() {
-        Point p_max = null;
+    public Weight getOutput() {
+        Weight w_max = null;
         double max_response = 0;
         for (Point p : points) {
             if (max_response < function(points.indexOf(p))) {
                 max_response = function(points.indexOf(p));
-                p_max = p;
+                w_max = weights.get(points.indexOf(p));
             }
         }
-        return p_max;
+        return w_max;
     }
 
 }
