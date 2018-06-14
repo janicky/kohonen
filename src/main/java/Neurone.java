@@ -19,11 +19,33 @@ public class Neurone {
     }
 
     public double getX() {
-        return winner.getX();
+        double sum = 0;
+        double count = 0;
+        for (Point p : points) {
+            if (this.equals(p.getNeurone())) {
+                sum += p.getX();
+                count++;
+            }
+        }
+        if (count == 0) {
+            return 0;
+        }
+        return sum / count;
     }
 
     public double getY() {
-        return winner.getY();
+        double sum = 0;
+        double count = 0;
+        for (Point p : points) {
+            if (this.equals(p.getNeurone())) {
+                sum += p.getY();
+                count++;
+            }
+        }
+        if (count == 0) {
+            return 0;
+        }
+        return sum / count;
     }
 
     private void initWeights() {
@@ -82,8 +104,6 @@ public class Neurone {
         }
         return new EqualsBuilder()
                 .appendSuper(super.equals(n))
-                .append(getX(), n.getX())
-                .append(getY(), n.getY())
                 .isEquals();
     }
 
