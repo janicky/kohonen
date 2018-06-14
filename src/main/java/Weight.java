@@ -19,6 +19,13 @@ public class Weight {
         return y;
     }
 
+    public double distanceTo(Weight w) {
+        return Math.sqrt(
+                Math.pow(x - w.getX(), 2) +
+                        Math.pow(y - w.getY(), 2)
+        );
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
