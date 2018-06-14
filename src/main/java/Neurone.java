@@ -24,7 +24,7 @@ public class Neurone {
 
     private void initWeights() {
         for (int i = 0; i < points.size(); i++) {
-            weights.add(i, new Weight(-0.5, 0.5));
+            weights.add(i, new Weight(-10.5, 10.5));
         }
     }
 
