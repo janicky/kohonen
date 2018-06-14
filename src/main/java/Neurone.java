@@ -28,7 +28,7 @@ public class Neurone {
 
     private void initWeights() {
         for (int i = 0; i < points.size(); i++) {
-            weights.add(i, new Weight(-10.5, 10.5));
+            weights.add(i, new Weight(-15.5, 15.5));
         }
     }
 
@@ -39,25 +39,27 @@ public class Neurone {
         return 1 / Math.sqrt(Math.pow(weight.getX() - point.getX(), 2) + Math.pow(weight.getY() - point.getY(), 2));
     }
 
-    public Weight getOutput() {
-        Weight w_max = null;
-        double max_response = 0;
-        for (Point p : points) {
-            if (max_response < function(points.indexOf(p))) {
-                max_response = function(points.indexOf(p));
-                w_max = weights.get(points.indexOf(p));
-            }
-        }
-        winner = w_max;
-        return w_max;
+    public double getOutput(int n) {
+        return function(n);
+//        Weight w_max = null;
+//        double max_response = 0;
+//        for (Point p : points) {
+//            if (max_response < function(points.indexOf(p))) {
+//                max_response = function(points.indexOf(p));
+//                w_max = weights.get(points.indexOf(p));
+//            }
+//        }
+//        winner = w_max;
+//        return w_max;
     }
 
-    public void learn(double lambda) {
+    public void learn(double lambda, Point p) {
+        winner = weights.get(points.indexOf(p));
         for (Weight w : weights) {
-            if (winner.distanceTo(w) < lambda) {
-                w.correctX(function(weights.indexOf(winner)) * winner.diffX(w));
-                w.correctY(function(weights.indexOf(winner)) * winner.diffY(w));
-                points.get(weights.indexOf(w)).setNeurone(this);
+            if (points.get(weights.indexOf(w)).distanceTo(this) < lambda) {
+                w.correctX(function(points.indexOf(p)) * winner.diffX(w));
+                w.correctY(function(points.indexOf(p)) * winner.diffY(w));
+                //points.get(weights.indexOf(w)).setNeurone(this);
             }
         }
     }
