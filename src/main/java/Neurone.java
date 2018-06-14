@@ -41,9 +41,11 @@ public class Neurone {
     }
 
     public void learn(double lambda) {
-//        for (Weight w : weights) {
-//
-//        }
+        for (Weight w : weights) {
+            if (winner.distanceTo(w) < lambda) {
+                w.correctX(learningFactor * winner.distanceX(w));
+            }
+        }
     }
 
 }
