@@ -1,5 +1,7 @@
 import org.apache.commons.lang.builder.EqualsBuilder;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,4 +84,29 @@ public class Neurone {
                 .append(getY(), n.getY())
                 .isEquals();
     }
+
+    private int pointsSize() {
+        int p_count = 0;
+        for (Point p : points) {
+            if (this.equals(p.getNeurone())) {
+                p_count++;
+            }
+        }
+        return p_count;
+    }
+
+    @Override
+    public String toString() {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+        sb.append(formatter.format(getX()));
+        sb.append(", ");
+        sb.append(formatter.format(getY()));
+        sb.append(") points: ");
+        sb.append(pointsSize() + "]\n");
+
+        return sb.toString();
+    }
+
 }
