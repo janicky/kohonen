@@ -14,6 +14,14 @@ public class Neurone {
         initWeights();
     }
 
+    public double getX() {
+        return winner.getX();
+    }
+
+    public double getY() {
+        return winner.getY();
+    }
+
     private void initWeights() {
         for (int i = 0; i < points.size(); i++) {
             weights.add(i, new Weight(-1, 1));
