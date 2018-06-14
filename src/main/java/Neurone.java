@@ -16,7 +16,7 @@ public class Neurone {
 
     private void initWeights() {
         for (int i = 0; i < points.size(); i++) {
-            weights.add(i, new Weight(0, 1));
+            weights.add(i, new Weight(-1, 1));
         }
     }
 
@@ -43,8 +43,8 @@ public class Neurone {
     public void learn(double lambda) {
         for (Weight w : weights) {
             if (winner.distanceTo(w) < lambda) {
-                w.correctX(learningFactor * winner.distanceX(w));
-                w.correctY(learningFactor * winner.distanceY(w));
+                w.correctX(learningFactor * winner.diffX(w));
+                w.correctY(learningFactor * winner.diffY(w));
             }
         }
     }
