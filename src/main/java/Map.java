@@ -8,6 +8,9 @@ public class Map {
     private int size;
     private double lambda;
     private int epoch = 0;
+    private double current_error = Double.MAX_VALUE;
+    private double last_error = 0;
+    private double precision = 0.0005;
 
     public Map(int size) {
 //        set map size
@@ -20,30 +23,18 @@ public class Map {
 //        init lambda
         lambda = max();
 
-        for (Neurone n : neurons) {
-            System.out.println(n.getOutput());
-        }
-        for (int i = 0; i < 20; i++) {
+        double active_error = Double.MAX_VALUE;
+        while (Math.abs((current_error - last_error) / current_error) > precision) {
             epoch();
-            System.out.println(getGlobalError());
+            classification();
+            active_error = Math.abs((current_error - last_error) / current_error);
+            last_error = current_error;
+            current_error = getGlobalError();
         }
-
-        System.out.println();
-        for (Neurone n : neurons) {
-            System.out.println(n.getOutput());
-        }
-
-        for (Point p : points) {
-            Neurone best_neurone = null;
-            double min = Double.MAX_VALUE;
-            for (Neurone n : neurons) {
-                if (min > p.distanceTo(n)) {
-                    min = p.distanceTo(n);
-                    best_neurone = n;
-                }
-            }
-            p.setNeurone(best_neurone);
-        }
+        System.out.println(neurons.toString());
+        System.out.println("Epochs: " + epoch);
+        System.out.println("D = " + getGlobalError());
+        System.out.println("e = " + active_error);
 
         Diagram d = new Diagram(400);
         d.setNeurons(neurons);
@@ -89,5 +80,19 @@ public class Map {
             sum += n.getError();
         }
         return sum / neurons.size();
+    }
+
+    private void classification() {
+        for (Point p : points) {
+            Neurone best_neurone = null;
+            double min = Double.MAX_VALUE;
+            for (Neurone n : neurons) {
+                if (min > p.distanceTo(n)) {
+                    min = p.distanceTo(n);
+                    best_neurone = n;
+                }
+            }
+            p.setNeurone(best_neurone);
+        }
     }
 }
