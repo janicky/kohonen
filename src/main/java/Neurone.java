@@ -1,3 +1,5 @@
+import org.apache.commons.lang.builder.EqualsBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,9 +63,23 @@ public class Neurone {
     public double getError() {
         double sum = 0d;
         for (Point p : points) {
-            sum += Math.sqrt(Math.pow(p.getX() - getX(), 2) + Math.pow(p.getY() - getY(), 2));
+            if (this.equals(p.getNeurone())) {
+                sum += Math.sqrt(Math.pow(p.getX() - getX(), 2) + Math.pow(p.getY() - getY(), 2));
+            }
         }
         return sum;
     }
 
+    public boolean equals(Neurone n) {
+        if (n == null) { return false; }
+        if (n == this) { return true; }
+        if (n.getClass() != getClass()) {
+            return false;
+        }
+        return new EqualsBuilder()
+                .appendSuper(super.equals(n))
+                .append(getX(), n.getX())
+                .append(getY(), n.getY())
+                .isEquals();
+    }
 }
