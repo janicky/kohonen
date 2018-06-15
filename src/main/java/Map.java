@@ -10,7 +10,7 @@ public class Map {
     private int epoch = 0;
     private double current_error = Double.MAX_VALUE;
     private double last_error = 0;
-    private double precision = 0.0005;
+    private double precision = 0.002;
 
     public Map(int size) {
 //        set map size
@@ -30,11 +30,21 @@ public class Map {
             active_error = Math.abs((current_error - last_error) / current_error);
             last_error = current_error;
             current_error = getGlobalError();
+            System.out.println("Epoch " + epoch + ": " + active_error);
         }
-        System.out.println(neurons.toString());
-        System.out.println("Epochs: " + epoch);
+
+        int dead = 0;
+        for (Neurone n : neurons) {
+            System.out.println(n);
+            if (!n.isAlive()) {
+                dead++;
+            }
+        }
+
+        System.out.println("\nEpochs: " + epoch);
         System.out.println("D = " + getGlobalError());
         System.out.println("e = " + active_error);
+        System.out.println("Dead: " + dead);
 
         Diagram d = new Diagram(400);
         d.setNeurons(neurons);

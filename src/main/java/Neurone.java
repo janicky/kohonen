@@ -12,7 +12,7 @@ public class Neurone {
 
     public Neurone(List<Point> points) {
         this.points = points;
-        weight = new Weight(-0.2, 0.2);
+        weight = new Weight(-10.2, 10.2);
     }
 
     public double getX() {
@@ -39,7 +39,9 @@ public class Neurone {
     public void learn(Neurone winner, Point p, double lambda) {
         weight.correctX(gauss(winner, lambda) * weight.diffX(p));
         weight.correctY(gauss(winner, lambda) * weight.diffY(p));
-        alive = true;
+        if (equals(winner)) {
+            alive = true;
+        }
     }
 
     private double gauss(Neurone winner, double lambda) {
@@ -81,12 +83,14 @@ public class Neurone {
     public String toString() {
         NumberFormat formatter = new DecimalFormat("#0.00");
         StringBuilder sb = new StringBuilder();
-        sb.append("(");
+        sb.append("[(");
         sb.append(formatter.format(getX()));
         sb.append(", ");
         sb.append(formatter.format(getY()));
         sb.append(") points: ");
-        sb.append(pointsSize() + "]\n");
+        sb.append(pointsSize() + ", ");
+        sb.append("alive: ");
+        sb.append(Boolean.toString(isAlive())  + "]");
 
         return sb.toString();
     }
