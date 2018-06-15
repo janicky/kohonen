@@ -87,8 +87,13 @@ public class Diagram extends JFrame {
             }
         }
 
-        g.setColor(Color.BLACK);
+
         for (Neurone ne : neurons) {
+            if (ne.isAlive()) {
+                g.setColor(Color.BLACK);
+            } else {
+                g.setColor(Color.RED);
+            }
             g.fill(new Ellipse2D.Double(scaleX(ne.getX()), scaleY(ne.getY()), 10, 10));
         }
 

@@ -10,7 +10,7 @@ public class Map {
     private int epoch = 0;
     private double current_error = Double.MAX_VALUE;
     private double last_error = 0;
-    private double precision = 0.002;
+    private double precision = 0.005;
 
     public Map(int size) {
 //        set map size
