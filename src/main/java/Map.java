@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +15,7 @@ public class Map {
     private int epoch = 0;
     private double current_error = Double.MAX_VALUE;
     private double last_error = 0;
-    private double precision = 0.005;
+    private double precision = 0.0005;
 
     public Map(int size) {
 //        set map size
@@ -22,6 +27,15 @@ public class Map {
         createNeurons();
 //        init lambda
         lambda = max();
+
+        File f = new File("neurons.txt");
+        try {
+            PrintWriter writer = new PrintWriter(f);
+            writer.print("");
+            writer.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
 
         double active_error = Double.MAX_VALUE;
         while (Math.abs((current_error - last_error) / current_error) > precision) {
@@ -39,6 +53,14 @@ public class Map {
             if (!n.isAlive()) {
                 dead++;
             }
+            StringBuilder sb = new StringBuilder();
+            sb.append(n.getX()).append(',').append(n.getY()).append("\n");
+            try {
+                Files.write(Paths.get("neurons.txt"), sb.toString().getBytes(), StandardOpenOption.APPEND);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+
         }
 
         System.out.println("\nEpochs: " + epoch);
@@ -68,7 +90,7 @@ public class Map {
                 }
             }
         }
-        lambda *= 0.9;
+        lambda *= 0.8;
         ++epoch;
     }
 

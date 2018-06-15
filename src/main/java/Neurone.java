@@ -12,7 +12,7 @@ public class Neurone {
 
     public Neurone(List<Point> points) {
         this.points = points;
-        weight = new Weight(-10.2, 10.2);
+        weight = new Weight(-0.5, 0.5);
     }
 
     public double getX() {
