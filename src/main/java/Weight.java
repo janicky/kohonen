@@ -27,18 +27,18 @@ public class Weight {
         this.y += y;
     }
 
-    public double distanceTo(Weight w) {
+    public double distanceTo(Neurone w) {
         return Math.sqrt(
                 Math.pow(x - w.getX(), 2) +
                         Math.pow(y - w.getY(), 2)
         );
     }
 
-    public double diffX(Weight w) {
-        return x - w.getX();
+    public double diffX(Point p) {
+        return p.getX() - x;
     }
-    public double diffY(Weight w) {
-        return y - w.getY();
+    public double diffY(Point p) {
+        return p.getY() - y;
     }
 
     @Override

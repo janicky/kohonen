@@ -26,7 +26,7 @@ public class Map {
         double active_error = Double.MAX_VALUE;
         while (Math.abs((current_error - last_error) / current_error) > precision) {
             epoch();
-            //classification();
+            classification();
             active_error = Math.abs((current_error - last_error) / current_error);
             last_error = current_error;
             current_error = getGlobalError();
@@ -43,10 +43,6 @@ public class Map {
     }
 
     public void epoch() {
-//        for (Neurone n : neurons) {
-//            n.getOutput();
-//            n.learn(lambda);
-//        }
         for (Point p : points) {
             double response = 0;
             Neurone winner = null;
@@ -56,8 +52,11 @@ public class Map {
                     winner = n;
                 }
             }
-            p.setNeurone(winner);
-            winner.learn(lambda, p);
+            for (Neurone n : neurons) {
+                if (winner.distanceTo(n) < lambda) {
+                    n.learn(winner, p, lambda);
+                }
+            }
         }
         lambda *= 0.9;
         ++epoch;

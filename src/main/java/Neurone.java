@@ -2,88 +2,44 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Neurone {
 
-    private List<Weight> weights = new ArrayList<>();
+    private Weight weight;
     private List<Point> points;
-    private double learningFactor = 0.5;
-    private Weight winner = null;
+    private boolean alive = false;
 
     public Neurone(List<Point> points) {
         this.points = points;
-//        init weights
-        initWeights();
+        weight = new Weight(-0.2, 0.2);
     }
 
     public double getX() {
-        double sum = 0;
-        double count = 0;
-        for (Point p : points) {
-            if (this.equals(p.getNeurone())) {
-                sum += p.getX();
-                count++;
-            }
-        }
-        if (count == 0) {
-            return 0;
-        }
-        return sum / count;
+        return weight.getX();
     }
 
     public double getY() {
-        double sum = 0;
-        double count = 0;
-        for (Point p : points) {
-            if (this.equals(p.getNeurone())) {
-                sum += p.getY();
-                count++;
-            }
-        }
-        if (count == 0) {
-            return 0;
-        }
-        return sum / count;
-    }
-
-    private void initWeights() {
-        for (int i = 0; i < points.size(); i++) {
-            weights.add(i, new Weight(-15.5, 15.5));
-        }
+        return weight.getY();
     }
 
     private double function(int n) {
-        Weight weight = weights.get(n);
         Point point = points.get(n);
-
         return 1 / Math.sqrt(Math.pow(weight.getX() - point.getX(), 2) + Math.pow(weight.getY() - point.getY(), 2));
     }
 
     public double getOutput(int n) {
         return function(n);
-//        Weight w_max = null;
-//        double max_response = 0;
-//        for (Point p : points) {
-//            if (max_response < function(points.indexOf(p))) {
-//                max_response = function(points.indexOf(p));
-//                w_max = weights.get(points.indexOf(p));
-//            }
-//        }
-//        winner = w_max;
-//        return w_max;
     }
 
-    public void learn(double lambda, Point p) {
-        winner = weights.get(points.indexOf(p));
-        for (Weight w : weights) {
-            if (points.get(weights.indexOf(w)).distanceTo(this) < lambda) {
-                w.correctX(function(points.indexOf(p)) * winner.diffX(w));
-                w.correctY(function(points.indexOf(p)) * winner.diffY(w));
-                //points.get(weights.indexOf(w)).setNeurone(this);
-            }
-        }
+    public void learn(Neurone winner, Point p, double lambda) {
+        weight.correctX(gauss(winner, lambda) * weight.diffX(p));
+        weight.correctY(gauss(winner, lambda) * weight.diffY(p));
+        alive = true;
+    }
+
+    private double gauss(Neurone winner, double lambda) {
+        return Math.exp(-(distanceTo(winner) * distanceTo(winner)) / (2 * lambda * lambda));
     }
 
     public double getError() {
@@ -129,6 +85,10 @@ public class Neurone {
         sb.append(pointsSize() + "]\n");
 
         return sb.toString();
+    }
+
+    public double distanceTo(Neurone n) {
+        return Math.sqrt(Math.pow(getX() - n.getX(), 2) + Math.pow(getY() - n.getY(), 2));
     }
 
 }
