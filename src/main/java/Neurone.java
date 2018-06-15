@@ -23,6 +23,10 @@ public class Neurone {
         return weight.getY();
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
     private double function(int n) {
         Point point = points.get(n);
         return 1 / Math.sqrt(Math.pow(weight.getX() - point.getX(), 2) + Math.pow(weight.getY() - point.getY(), 2));
