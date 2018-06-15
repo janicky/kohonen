@@ -27,13 +27,6 @@ public class Weight {
         this.y += y;
     }
 
-    public double distanceTo(Neurone w) {
-        return Math.sqrt(
-                Math.pow(x - w.getX(), 2) +
-                        Math.pow(y - w.getY(), 2)
-        );
-    }
-
     public double diffX(Point p) {
         return p.getX() - x;
     }
